@@ -13,16 +13,16 @@ class ViewController: UIViewController {
     {
         "data" : [
             {
-                "test1" : "test1"
+                "name" : "test1"
             },
             {
-                "test2" : "test2"
+                "name" : "test2"
             },
             {
-                "test3" : "test3"
+                "name" : "test3"
             },
             {
-                "test4" : "test4"
+                "name" : "test4"
             }
         ]
     }
@@ -32,9 +32,12 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         
         convertJSONToStringAsDictionary(jsonString: jsonString)
+        convertJSONToStringAsModel(jsonString: jsonString)
     }
 
     func convertJSONToStringAsDictionary(jsonString:String) {
+        print("convertJSONToStringAsModel")
+        
         let data = jsonString.data(using: .utf8)!
         do {
             if let jsonArray = try JSONSerialization.jsonObject(with: data, options : .allowFragments) as? Dictionary<String,Any>
@@ -45,6 +48,20 @@ class ViewController: UIViewController {
             }
         } catch let error as NSError {
             print(error)
+        }
+    }
+    
+    func convertJSONToStringAsModel(jsonString:String) {
+        print("convertJSONToStringAsModel")
+        
+        let data = jsonString.data(using: .utf8)!
+        let decoder = JSONDecoder()
+        
+        do{
+            let model = try decoder.decode(CustomModels.self, from: data)
+            print(model)
+        }catch{
+            
         }
     }
 
